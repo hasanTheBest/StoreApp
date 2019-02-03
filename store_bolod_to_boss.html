@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Store Bolod To Boos- Object Oriented Programming</title>
+</head>
+<body>
+	<h2 align="center">StoreApp, Object Oriented Programming</h2><hr>
+	
+	<script type="text/javascript">
+		// Store Class
+		class Store{
+			constructor(name){
+				this.name = name;
+				this.stock = []; 
+				this.price= {};
+				this.store = {};
+				this.totallSell = 0;
+			}
+
+			// Add Item
+			addItem(name, price, quantity){
+				//this.name : name,
+				if(this.stock.indexOf(name) == -1){
+					this.stock.push(name);
+					this.price[name] = price;
+					this.store[name] = quantity;
+				}else{	
+					let available = this.store[name];
+					this.store[name] = available + quantity;
+				}
+				//this.stock.push(this.price);
+			}
+
+			// Check item Availability
+			isAvailable(name){
+				//console.log(this.stock[name]);	Result undefined;
+				if(this.price[name] === undefined){
+					console.log('0 Item Found. Sorry!!!');
+				}else{
+					console.log('Item is Available\nPrice:\t'+ this.price[name] + '\nQuantity:\t' + this.store[name]);
+				}
+			}
+
+			// Check Stock
+			getStock(){
+				console.log(this.stock.length);
+			}
+			getStockValue(){
+				let stockValue = 0;
+				let itemPrice = this.price;
+				this.stock.forEach(function(item){
+					stockValue = stockValue + itemPrice[item];
+				});
+				//console.log(stockValue);
+			}
+
+			// Sell Item
+			sellItems(name, quantity){
+				let itemPrice = this.price[name];				
+				let itemAvailable = this.store[name];
+				if(quantity <= itemAvailable){
+					let currentSale = itemPrice * quantity;
+					this.store[name] = itemAvailable - quantity;
+					console.log(`Cart Summary:\nProduct Name:\t${name}\nProducnt Price:\t${this.price[name]}\nProducnt Quantity:\t${quantity}\nTotal Price:\t${currentSale}`);
+					this.totallSell = this.totallSell + currentSale;
+				}else{
+					console.log('We don\'t have required number item. We have in stock-\n');
+					this.isAvailable(name);
+				}
+			}
+
+			totallSaleAmount(){
+				console.log('Today\'s Totall Sales:\t'+this.totallSell);
+			}
+		}
+
+
+		let hablueStore = new Store('Hablu Store');
+		hablueStore.addItem('Pant', 500, 50);
+		hablueStore.addItem('Shirt', 900, 100);
+		hablueStore.addItem('Panjabi', 1000, 10);
+		console.log(hablueStore.stock);
+	</script>
+</body>
+</html>
